@@ -1,0 +1,35 @@
+AGROVISION AI - START HERE
+
+Is ZIP ko ek hi dafa extract karo. Yeh purani website ka replacement project hai, alag-alag chhoti files download karne ki zaroorat nahi.
+
+1) PUBLIC WEBSITE (GitHub Pages)
+- GitHub repo Aaliyancloud/Agrovision kholo.
+- ZIP extract karke index.html ko repo ke root mein upload karo aur purani index.html replace karo.
+- js folder ko bhi root mein upload karo. Iske andar ml-detector.js hai.
+- Agar repo mein pehle se assets folder ya doosri project files hain to unhein delete mat karna.
+- GitHub Pages website par AI browser mein chalega. Pehli scan par taqreeban 88 MB model download hoga, is liye internet aur thora waqt chahiye.
+- Public mode mein image AgroVision ke kisi server par upload nahi hoti.
+
+2) EXHIBITION LAPTOP (Python local mode)
+- Is ZIP ko laptop par extract karo.
+- Python 3.11 ya us se naya version hona chahiye.
+- run_local.bat par double-click karo.
+- Pehli dafa Python packages aur model download honge. Download complete hone do.
+- Browser mein http://127.0.0.1:8000 kholo.
+- Camera ke liye browser permission Allow karo.
+- Model laptop par cache ho jane ke baad local scanning internet ke baghair chal sakti hai. Project folder aur Hugging Face cache delete mat karna.
+
+3) MODEL KE BAARE MEIN
+- Model DINOv2-small ka FP32 ONNX export hai.
+- Purana OOD/centroid threshold hata diya gaya hai kyun ke woh valid leaf photos ko bhi reject kar raha tha.
+- Agar model ki top prediction tomato class nahi hoti to app kehti hai: Not classified as tomato. Yeh guarantee nahi ke tasveer mein koi leaf hi nahi.
+- Ghair-leaf tasveer bhi kabhi ghalat tomato class mein aa sakti hai. Is liye output ko screening samjho, final diagnosis nahi.
+- Public browser mode mein 88 MB download hota hai. Kuch purane ya kam RAM wale phones par scan slow ho sakta hai.
+
+4) JO FEATURES RAKHE GAYE HAIN
+- Existing website layout, upload, live camera, English/Urdu toggle, Judge Mode, exhibition guide aur tutorial section.
+- Tomato disease model, disease library pop-ups, scan history, weather lookup + manual risk sliders, floating guided Plant Assistant.
+- Sample leaf illustrations sirf design examples hain; woh real photos nahi aur un par model test nahi hota.
+
+IMPORTANT
+Maine HTML/JavaScript/Python syntax checks kiye hain. Is environment mein ONNX Runtime aur model weights download/run karke real-photo inference test nahi ho saka. Is liye ZIP ko upload karne se pehle exhibition laptop par asli tomato leaf ki 3-5 photos se test karna zaroori hai. Bina us test ke main 100% accuracy ya fully verified result ka claim nahi kar raha.

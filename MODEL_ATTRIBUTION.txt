@@ -1,0 +1,6 @@
+Model: rodynaemad/plant-disease-dinov2-small (CC BY-SA 4.0)
+Model file: onnx/model_with_features.onnx (FP32, approx. 88 MB)
+Dataset: PlantVillage (CC BY-SA 4.0)
+Backbone: facebook/dinov2-small (Apache 2.0)
+Source: https://huggingface.co/rodynaemad/plant-disease-dinov2-small
+Published accuracy is on a held-out PlantVillage test set, not a real-farm accuracy guarantee.

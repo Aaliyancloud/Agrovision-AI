@@ -2,13 +2,12 @@
 <title>AgroVision AI | Tomato Plant Health Screening</title>
 <meta name="description" content="AgroVision AI is a student project for tomato leaf symptom screening and disease education.">
 <meta name="theme-color" content="#10251b">
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap">
 <style>
 :root{
-  /* Layout: a field-guide specimen sheet. Hero pairs the headline with a labelled leaf plate, then the working leaf check, weather risk, reference library, method and exhibition notes on ruled sheets. */
+  /* Color palette and typography. */
   --bg:#EBEFE6; --surface:#F7F9F3; --ink:#12251A; --muted:#475A4D; --line:#C6D0BF;
   --leaf:#1D5A39; --on-leaf:#FFFFFF; --leaf-soft:#DAE7D5;
   --tomato:#C2381F; --tomato-soft:#F5DDD5;
@@ -246,8 +245,8 @@ dialog::backdrop{background:rgba(5,12,8,.62)}
 .dlg h3{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tomato)}
 </style>
 
-<style id="agrovision-motion-upgrade">
-/* AgroVision field-cinema layer */
+<style id="agrovision-visual-styles">
+/* Header, hero and motion effects. */
 :root{--bg:#e9eee3;--surface:#f8faf4;--ink:#14271b;--muted:#526456;--line:#c5d2bd;--leaf:#245f3b;--tomato:#d14b2d}
 body{overflow-x:hidden}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.14;background-image:radial-gradient(#425d43 .65px,transparent .65px);background-size:6px 6px;mask-image:linear-gradient(to bottom,black,transparent 65%)}
@@ -384,7 +383,7 @@ dialog{box-shadow:0 30px 90px #06130b55}
 <div class="strip"><div class="wrap" data-i18n="strip">Class 11 STEAM Exhibition · Pakistan</div></div>
 
 <style>
-/* AgroVision AI: animated visual upgrade */
+/* Page background and hover effects. */
 :root {
   --av-green: #79e36b;
   --av-glow: rgba(121, 227, 107, .22);
@@ -461,7 +460,7 @@ body::before {
 
 <style id="agrovision-final-features">
 .fab{position:fixed!important;right:16px;bottom:16px}.assistant-fab{position:fixed;z-index:30;right:16px;bottom:76px;box-shadow:0 6px 22px #10251b30}.history-list{display:grid;gap:10px;margin-bottom:16px}.history-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:8px}.history-item small{display:block;color:var(--muted)}.assistant-log{display:grid;gap:10px;max-height:42vh;overflow:auto;padding:12px;background:var(--bg);border-radius:8px}.assistant-bot,.assistant-user{padding:10px 12px;border-radius:8px;max-width:90%}.assistant-bot{background:var(--leaf-soft);justify-self:start}.assistant-user{background:var(--tomato-soft);justify-self:end}.assistant-form{display:flex;gap:8px;align-items:center}.assistant-form .search{max-width:none;min-width:0}.library-photo{width:100%;max-height:260px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}.library-credit{font-size:12px;color:var(--muted)}.mode-line{font-size:13px;color:var(--muted);margin-top:8px}.api-state{display:inline-flex;align-items:center;gap:6px}.api-state:before{content:"";width:8px;height:8px;border-radius:50%;background:#b7791f}.api-state.online:before{background:#27834a}.api-state.offline:before{background:#b42318}.model-disclaimer{font-size:12px;color:var(--muted);margin-top:8px}.sec{scroll-margin-top:110px}
-/* Keep the interface calm and readable; preserve only small hover feedback. */
+/* Disable decorative motion. */
 .farm-hero-art,.sun-rays,.sun-disc,.tomato-vines,.floating-seed,.scan i{animation:none!important}.reveal-ready,.av-reveal{opacity:1!important;transform:none!important;transition:none!important}
 @media(max-width:600px){.history-item{align-items:flex-start;flex-direction:column}.assistant-form{flex-wrap:wrap}.assistant-form .search{flex:1 1 100%}.assistant-fab{bottom:72px}}
 </style>
@@ -1350,7 +1349,7 @@ applyLang();
   $('history-clear')?.addEventListener('click',()=>{localStorage.removeItem(historyKey);renderHistory()});
   $('history-list')?.addEventListener('click',e=>{const b=e.target.closest('[data-history-open]');if(!b)return;const r=history()[Number(b.dataset.historyOpen)];if(r)alert(`${r.label}\n${r.when}\n${r.score}`)});
 
-  // Disease detail modal. Images are real reference photographs where available; no generated disease imagery is presented as evidence.
+  // Reference photos and credits for selected conditions.
   const photoMap={
     'Early blight':{url:'https://commons.wikimedia.org/wiki/Special:FilePath/Alternaria_solani_-_leaf_lesions.jpg?width=1000',credit:'Image: Alternaria solani - leaf lesions, Clemson University - USDA Cooperative Extension Slide Series, CC BY 3.0 US.'},
     'Late blight':{url:'https://commons.wikimedia.org/wiki/Special:FilePath/Tomato_late_blight_leaf_sporulating_lesions_1_(5816170621).jpg?width=1000',credit:'Image: Tomato late blight leaf sporulating lesions, Scot Nelson, CC0 1.0.'},
@@ -1362,7 +1361,7 @@ applyLang();
   // Live weather from Open-Meteo. Location is requested only after the user taps the button.
   $('weather-current')?.addEventListener('click',()=>{const status=$('weather-status');if(!navigator.geolocation){status.textContent='Location is not available in this browser.';return;}status.textContent='Waiting for location permission…';navigator.geolocation.getCurrentPosition(async pos=>{try{const u=new URL('https://api.open-meteo.com/v1/forecast');u.searchParams.set('latitude',pos.coords.latitude);u.searchParams.set('longitude',pos.coords.longitude);u.searchParams.set('current','temperature_2m,relative_humidity_2m');u.searchParams.set('timezone','auto');const r=await fetch(u);if(!r.ok)throw new Error('Weather service unavailable');const j=await r.json();$('temp').value=Math.round(j.current.temperature_2m);$('hum').value=Math.round(j.current.relative_humidity_2m);$('temp').dispatchEvent(new Event('input'));$('hum').dispatchEvent(new Event('input'));status.textContent=`Updated: ${j.current.temperature_2m} °C, ${j.current.relative_humidity_2m}% humidity.`;}catch(err){status.textContent=err.message;}},()=>{status.textContent='Location permission was denied or unavailable.'},{enableHighAccuracy:false,timeout:12000,maximumAge:600000});});
 
-  // Curated, bilingual, rule-guided assistant. It does not pretend to be a generative model.
+  // Answers common plant-care questions from the bilingual response list.
   const assistant=$('assistant-modal'),log=$('assistant-log'),input=$('assistant-input');
   $('assistant-open')?.addEventListener('click',()=>assistant.showModal());$('assistant-close')?.addEventListener('click',()=>assistant.close());
   const replies=[

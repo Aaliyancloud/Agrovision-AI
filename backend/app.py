@@ -52,7 +52,7 @@ def _preprocess(image: Image.Image) -> np.ndarray:
     image = ImageOps.exif_transpose(image).convert('RGB')
     w,h = image.size
     if min(w,h) < 80: raise ValueError('Image is too small. Use a clearer photo.')
-    # DINOv2 processor recipe: resize shortest edge to 256, center crop 224, ImageNet normalization.
+    # Match the model's preprocessing: resize, center-crop, then normalize.
     scale = 256.0 / min(w,h)
     nw,nh = max(256, round(w*scale)), max(256, round(h*scale))
     image = image.resize((nw,nh), Image.Resampling.BICUBIC)
@@ -72,7 +72,7 @@ def _predict(image: Image.Image) -> dict[str, Any]:
     tensor=_preprocess(image)
     input_name=_session.get_inputs()[0].name
     outputs=_session.run(None,{input_name:tensor})
-    # The published ONNX export returns logits and a feature vector.
+    # The ONNX export returns logits first, followed by a feature vector.
     logits=outputs[0].reshape(-1)
     probs=_softmax(logits)
     ranked=np.argsort(probs)[::-1]
@@ -81,8 +81,8 @@ def _predict(image: Image.Image) -> dict[str, Any]:
     for i in ranked[:5]:
         label=_id2label.get(int(i),f'class_{int(i)}')
         top.append({'label':label.replace('Tomato___','').replace('___',' / ').replace('_',' '),'score':float(probs[int(i)])})
-    # This model is closed-set. A non-tomato top class is a useful crop rejection,
-    # but it is not a universal non-leaf detector. Do not invent an OOD guarantee.
+    # This is a closed-set classifier; a non-tomato result does not prove the
+    # image contains no leaf.
     if not best_label.lower().startswith('tomato___'):
         return {'status':'not_tomato','key':'invalid','label':best_label,'score':float(probs[best_i]),'crop':best_label.split('___')[0],'top3':top}
     condition=best_label.split('___',1)[-1].replace('_',' ').lower()

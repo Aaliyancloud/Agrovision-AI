@@ -1,9 +1,6 @@
-/* AgroVision AI browser inference.
-   FP32 ONNX export of rodynaemad/plant-disease-dinov2-small.
-   Images are processed in the browser in public mode. The OOD threshold is
-   intentionally not used: it previously rejected valid leaf photos too often.
-   A non-tomato top class is reported as "not classified as tomato", not as
-   proof that the image contains no leaf.
+/* Runs the tomato disease classifier in the browser using ONNX Runtime.
+   Model: rodynaemad/plant-disease-dinov2-small (FP32 ONNX export).
+   A non-tomato prediction is a crop mismatch, not a general leaf detector.
 */
 (function () {
   "use strict";
